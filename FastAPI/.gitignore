@@ -1,0 +1,28 @@
+# Environment
+# ---
+# Ignore the .env file to keep sensitive data like API keys out of version control.
+.env
+
+# Virtual Environments
+# ---
+# Standard directory names for Python virtual environments.
+.venv/
+venv/
+env/
+
+# Python cache
+# ---
+# Ignore Python's bytecode and cache directories.
+__pycache__/
+*.pyc
+
+# IDE & Editor configuration
+# ---
+# Ignore configuration files from popular editors like VSCode and JetBrains IDEs.
+.vscode/
+.idea/
+
+# Testing & Coverage
+# ---
+.pytest_cache/
+.coverage

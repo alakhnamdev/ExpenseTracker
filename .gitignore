@@ -1,0 +1,64 @@
+# .gitignore for the root of the project
+
+###################
+# General Ignores #
+###################
+
+# Environment variables
+# Keep sensitive data like API keys out of version control
+.env
+.env.*
+!/.env.example
+
+# IDE & Editor configuration
+.vscode/
+.idea/
+
+# OS-generated files
+.DS_Store
+
+# Certificates
+*.pem
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+######################
+# Frontend (Next.js) #
+######################
+
+# Dependencies
+frontend/node_modules/
+
+# Next.js build outputs
+frontend/.next/
+frontend/out/
+
+# Production build
+frontend/build/
+
+# TypeScript
+frontend/next-env.d.ts
+*.tsbuildinfo
+
+# Testing
+frontend/coverage/
+
+####################
+# Backend (FastAPI) #
+####################
+
+# Python virtual environments
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Testing
+.pytest_cache/
+.coverage
