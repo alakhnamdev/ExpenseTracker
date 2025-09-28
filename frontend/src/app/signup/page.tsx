@@ -21,7 +21,7 @@ export default function SignupPage() {
     console.log("Submitting:", { username, email, password });
     try {
       const data = await Signup(username, email, password);
-      console.log("Signup successful:", data);
+      console.log("Signup successful:", email);
       toast.success("Signup successful! Please login.");
       router.push("/login");
     } catch (error) {
