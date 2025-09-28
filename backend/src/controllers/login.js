@@ -35,7 +35,8 @@ const Login = async (req, res) => {
     // Set cookie options
     const cookieOptions = {
       httpOnly: true, // The cookie is not accessible via client-side script
-      secure: process.env.NODE_ENV === "production", // Only send cookie over HTTPS in production
+      // secure: process.env.NODE_ENV === "production", // Only send cookie over HTTPS in production
+      secure: true,
       // sameSite: "None", // allow cross-site (frontend + backend different domains)
       maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds, should match token expiry
     };
