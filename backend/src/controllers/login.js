@@ -39,6 +39,7 @@ const Login = async (req, res) => {
       secure: true,
       sameSite: "None", // allow cross-site (frontend + backend different domains)
       maxAge: 24 * 60 * 60 * 1000, // 1 day in milliseconds, should match token expiry
+      path: "/",
     };
 
     res
