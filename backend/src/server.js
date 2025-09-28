@@ -24,7 +24,16 @@ app.locals.debug = config.debug;
 
 // CORS middleware: This allows all origins, methods, and headers, and supports credentials.
 app.use(cors({
-    origin: config.allowed_origins,
+    origin: function (origin, callback) {
+        // Allow requests with no origin (mobile apps, curl, etc.)
+        if (!origin) return callback(null, true);
+        
+        if (config.allowed_origins.includes(origin)) {
+            return callback(null, true);
+        }
+        
+        callback(new Error('Not allowed by CORS'));
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
