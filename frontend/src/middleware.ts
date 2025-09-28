@@ -33,10 +33,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  if (token && pathname === "/login" || pathname === "/") {
-    const homeUrl = new URL("/dashboard", request.url);
-    return NextResponse.redirect(homeUrl);
-  }
+  // if (token && pathname === "/login" || pathname === "/") {
+  //   const homeUrl = new URL("/dashboard", request.url);
+  //   return NextResponse.redirect(homeUrl);
+  // }
 
   // Verify the token by calling the backend API
   try {
