@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const publicRoutes = ["/login", "/signup","/dashboard"];
+const publicRoutes = ["/login", "/signup"];
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
