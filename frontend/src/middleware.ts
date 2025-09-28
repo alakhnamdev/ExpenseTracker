@@ -28,10 +28,10 @@ export async function middleware(request: NextRequest) {
   }
 
   // If there's no token and the route is protected, redirect to login
-  if (!token) {
-    const loginUrl = new URL("/login", request.url);
-    return NextResponse.redirect(loginUrl);
-  }
+  // if (!token) {
+  //   const loginUrl = new URL("/login", request.url);
+  //   return NextResponse.redirect(loginUrl);
+  // }
 
   // if (token && pathname === "/login" || pathname === "/") {
   //   const homeUrl = new URL("/dashboard", request.url);
