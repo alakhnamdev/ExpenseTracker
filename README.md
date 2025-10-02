@@ -16,7 +16,7 @@ This is a full-stack expense tracker application designed to help users manage t
 | Service             | Framework/Library                                                              | Language   | Database/Storage |
 | ------------------- | ------------------------------------------------------------------------------ | ---------- | ---------------- |
 | **Frontend**        | Next.js, React, Tailwind CSS, shadcn/ui, Tanstack Table                        | TypeScript | -                |
-| **Backend (Core)**  | Node.js, Express.js, Mongoose                                                  | JavaScript | MongoDB          |
+| **Backend (Core)**  | Node.js, Express.js, Mongoose                                                  | JavaScript | MongoDB, sqlLite |
 | **Backend (Analysis)** | FastAPI, Pandas                                                                | Python     | -                |
 
 ## Architecture Overview
@@ -65,6 +65,8 @@ Make sure you have the following software installed on your system:
 ---
 
 #### **3. Frontend (Next.js) Setup**
+
+Base URL: `http://localhost:3000/`
 
 1.  Navigate to the `frontend` directory:
     ```bash
@@ -136,7 +138,7 @@ Once all three services are running, you can access the application in your brow
 
 ### Backend API (Node.js / Express)
 
-Base URL: `http://localhost:8080`
+Base URL: `http://localhost:4000/api/v1`
 
 #### Authentication (`/auth`)
 *   `POST /signup`: Register a new user.
@@ -165,9 +167,10 @@ Base URL: `http://localhost:8080`
 
 ### Analysis API (Python / FastAPI)
 
-Base URL: `http://localhost:8000`
+Base URL: `http://localhost:8000/api/v1`
 
 #### Suggestions (`/suggestions`)
 *   `POST /`: Analyzes a provided list of user expenses and returns a list of personalized financial suggestions.
     *   **Request Body**: A JSON object with an `expenses` key containing an array of expense objects.
     *   **Response**: A JSON object with a `suggestions` key containing an array of suggestion strings.
+
