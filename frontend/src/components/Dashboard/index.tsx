@@ -119,7 +119,7 @@ export default function Dashboard() {
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardDescription>Top Category</CardDescription>
+            <CardDescription>Top Category (This Month)</CardDescription>
             <CardTitle className="text-3xl"></CardTitle>
           </CardHeader>
           <CardContent>
