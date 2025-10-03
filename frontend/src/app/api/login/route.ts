@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
         if (!backendRes.ok) {
             const errorData = await backendRes.json();
             return NextResponse.json(
-                { error: errorData.message || "Login failed" },
+                { error: errorData || "Login with backend failed" },
                 { status: backendRes.status }
             );
         }
