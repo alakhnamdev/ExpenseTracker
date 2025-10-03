@@ -1,9 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 
+interface LoginRequestBody {
+    email: string;
+    password: string;
+}
+
+interface cookieOptionsProps {
+    httpOnly: boolean;
+    secure: boolean;
+    sameSite: "none";
+    maxAge: number;
+}
+
 export async function POST(req: NextRequest) {
     try {
         console.log("Login Request Initiated");
-        const { email, password } = await req.json();
+        const { email, password } : LoginRequestBody = await req.json();
 
         const backendRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
             method: "POST",
@@ -24,9 +36,10 @@ export async function POST(req: NextRequest) {
         }
 
         const data = await backendRes.json();
-        const cookieOptions = {
+        const cookieOptions : cookieOptionsProps = {
             httpOnly: true,
             secure: true,
+            sameSite: "none",
             maxAge: 24 * 60 * 60 * 1000,
         };
 
