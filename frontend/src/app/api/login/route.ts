@@ -33,9 +33,9 @@ export async function POST(req: NextRequest) {
         const response = NextResponse.json({ email: data.email });
         response.cookies.set("token", data.token, cookieOptions);
         return response;
-    } catch (error: any) {
+    } catch (error) {
         return NextResponse.json(
-            { error: error.message || "Internal Server Error" },
+            { error: error || "Internal Server Error" },
             { status: 500 }
         );
     }
