@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const publicRoutes = ["/login", "/signup","/dashboard"];
+const publicRoutes = ["/login", "/signup"];
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Allow requests for API, static files, and image optimization to pass through
+  // Allow requests for API, static files, and image optimization
   if (
     pathname.startsWith("/api") ||
     pathname.startsWith("/_next/static") ||
@@ -19,26 +19,25 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Get the authentication token from the cookies
+  // Get the authentication token from cookies
   const token = request.cookies.get("token")?.value;
 
-  // If the user is trying to access a public route, let them pass
+  // If user has token and tries to access login/signup, redirect to dashboard
+  if (token && (pathname === "/login" || pathname === "/signup")) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+
+  // Allow public routes without token
   if (publicRoutes.includes(pathname)) {
     return NextResponse.next();
   }
 
-  // If there's no token and the route is protected, redirect to login
+  // No token and not a public route - redirect to login
   if (!token) {
-    const loginUrl = new URL("/login", request.url);
-    return NextResponse.redirect(loginUrl);
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (token && pathname === "/login" || pathname === "/") {
-    const homeUrl = new URL("/dashboard", request.url);
-    return NextResponse.redirect(homeUrl);
-  }
-
-  // Verify the token by calling the backend API
+  // Verify token for protected routes
   try {
     const response = await fetch(`${apiBaseUrl}/auth/verify-auth`, {
       method: "POST",
@@ -46,33 +45,24 @@ export async function middleware(request: NextRequest) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ token }),
+      cache: 'no-store' // Prevent caching
     });
 
-    // If the token is invalid (API returns non-200), redirect to login
     if (!response.ok) {
       throw new Error("Authentication failed");
     }
 
-    // If the token is valid, allow the request to proceed
     return NextResponse.next();
   } catch (error) {
-    console.error("\nMiddleware auth error: Unable to verify token\n",error);
-    const loginUrl = new URL("/login", request.url);
-    // In case of any error during verification, redirect to login for safety
-    return NextResponse.redirect(loginUrl);
+    console.error("Middleware auth error:", error);
+    
+    // Clear invalid token
+    const response = NextResponse.redirect(new URL("/login", request.url));
+    response.cookies.delete("token");
+    return response;
   }
 }
 
-// Use the matcher to specify which paths the middleware should run on.
 export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes) - though we handle it above, this is an optimization
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
-  ],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };
