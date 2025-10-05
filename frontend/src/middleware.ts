@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 
 const publicRoutes = ["/login", "/signup"];
 
-const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "";
+const apiBaseUrl = process.env.BACKEND_URL || "";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -24,6 +24,7 @@ export async function middleware(request: NextRequest) {
 
   // If user has token and tries to access login/signup, redirect to dashboard
   if (token && (pathname === "/login" || pathname === "/signup")) {
+    console.log("Redirecting to dashboard, token: ",token)
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
@@ -34,6 +35,7 @@ export async function middleware(request: NextRequest) {
 
   // No token and not a public route - redirect to login
   if (!token) {
+    console.log("Redirecting to login, token: ",token)
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
