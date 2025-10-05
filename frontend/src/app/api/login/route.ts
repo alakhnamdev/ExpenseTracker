@@ -8,7 +8,7 @@ interface LoginRequestBody {
 interface cookieOptionsProps {
     httpOnly: boolean;
     secure: boolean;
-    sameSite: "none";
+    // sameSite: "none";
     maxAge: number;
 }
 
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
         const cookieOptions : cookieOptionsProps = {
             httpOnly: true,
             secure: true,
-            sameSite: "none",
+            // sameSite: "none",
             maxAge: 24 * 60 * 60 * 1000,
         };
 
